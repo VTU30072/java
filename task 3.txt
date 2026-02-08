@@ -1,0 +1,106 @@
+TASK 3: ARRAY MANIPULATION AND ANALYSIS PROGRAMS
+    **(A) RETURN THE MAX SLIDING WINDOW**
+
+import java.util.Scanner;
+
+class SlidingWindowMaximum {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter array size: ");
+        int n = sc.nextInt();
+        int[] nums = new int[n];
+
+        System.out.println("Enter " + n + " array elements:");
+        for (int i = 0; i < n; i++) {
+            nums[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter window size: ");
+        int k = sc.nextInt();
+
+        int[] result = new int[n - k + 1];
+
+        for (int i = 0; i <= n - k; i++) {
+            int max = nums[i];
+            for (int j = i; j < i + k; j++) {
+                if (nums[j] > max) {
+                    max = nums[j];
+                }
+            }
+            result[i] = max;
+        }
+
+        System.out.print("Sliding window maximum: ");
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i] + " ");
+        }
+    }
+}
+(B) ADJUSTED SUM
+import java.util.Scanner;
+
+class AdjustedSum {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the size of the array: ");
+        int N = sc.nextInt();
+
+        int[] arr = new int[N];
+        int sum = 0;
+
+        System.out.println("Enter the array elements:");
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+            if (arr[i] % 2 == 0) {
+                sum = sum + arr[i];
+            } else {
+                sum = sum - arr[i];
+            }
+        }
+
+        System.out.println("Adjusted Sum = " + sum);
+    }
+}
+(C) ROTATE ARRAY AND FIND MAX DIFFERENCE
+import java.util.Scanner;
+
+class RotateMaxDifference {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter the size of the array: ");
+        int N = sc.nextInt();
+
+        int[] arr = new int[N];
+        int[] rotated = new int[N];
+
+        System.out.println("Enter the array elements:");
+        for (int i = 0; i < N; i++) {
+            arr[i] = sc.nextInt();
+        }
+
+        System.out.print("Enter K value: ");
+        int K = sc.nextInt();
+        K = K % N;
+        for (int i = 0; i < N; i++) {
+            rotated[(i + K) % N] = arr[i];
+        }
+
+        int maxDiff = 0;
+        for (int i = 0; i < N - 1; i++) {
+            int diff = Math.abs(rotated[i] - rotated[i + 1]);
+            if (diff > maxDiff) {
+                maxDiff = diff;
+            }
+        }
+
+        System.out.println("Rotated Array:");
+        for (int num : rotated) {
+            System.out.print(num + " ");
+        }
+
+        System.out.println("\nMaximum difference = " + maxDiff);
+    }
+}
