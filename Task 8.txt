@@ -1,0 +1,113 @@
+                            Task 8
+
+
+A) Creating Threads
+
+
+class ExtendThread extends Thread {
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Thread (extends): "
+                    + Thread.currentThread().getName() + " - Iteration " + i);
+        }
+    }
+}
+
+class ImplRunnable implements Runnable {
+    @Override
+    public void run() {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Thread (runnable): "
+                    + Thread.currentThread().getName() + " - Iteration " + i);
+        }
+    }
+}
+
+public class CreateThreads {
+    public static void main(String[] args) {
+        // Thread created by extending Thread class
+        ExtendThread t1 = new ExtendThread();
+        t1.setName("Thread-Extend");
+        t1.start();
+
+        // Thread created by implementing Runnable interface
+        Thread t2 = new Thread(new ImplRunnable());
+        t2.setName("Thread-Runnable");
+        t2.start();
+    }
+}
+
+
+B) Thread Lifecycle Demonstration
+
+public class ThreadLifecycle {
+    public static void main(String[] args) throws InterruptedException {
+
+        // Create a thread
+        Thread thread = new Thread(() -> {
+            try {
+                System.out.println("Inside thread - State: RUNNING");
+                Thread.sleep(500); // Thread goes into TIMED_WAITING
+                System.out.println("After sleep   - State: RUNNING (resumed)");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+        // State after creation (NEW)
+        System.out.println("1. State after creation : " + thread.getState());
+
+        // Start the thread
+        thread.start();
+        System.out.println("2. State after start()  : " + thread.getState());
+
+        // Sleep main thread briefly to check thread state
+        Thread.sleep(100);
+        System.out.println("3. State during sleep() : " + thread.getState());
+
+        // Wait for thread to finish
+        thread.join();
+        System.out.println("4. State after finish   : " + thread.getState());
+    }
+}
+
+
+C) Thread Sleep and Join
+
+
+public class SleepAndJoin {
+    public static void main(String[] args) throws InterruptedException {
+
+        // Thread 1: Prints numbers with a delay
+        Thread t1 = new Thread(() -> {
+            for (int i = 1; i <= 5; i++) {
+                System.out.println("Thread 1 - Number: " + i);
+                try {
+                    Thread.sleep(1000); // Pause for 1 second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("Thread 1 - Finished.");
+        });
+
+        // Thread 2: Runs only after Thread 1 finishes
+        Thread t2 = new Thread(() -> {
+            System.out.println("Thread 2 - Started after Thread 1 finished.");
+            for (int i = 1; i <= 3; i++) {
+                System.out.println("Thread 2 - Step " + i);
+            }
+            System.out.println("Thread 2 - Finished.");
+        });
+
+        // Start Thread 1
+        t1.start();
+
+        // Wait for Thread 1 to complete before starting Thread 2
+        t1.join();
+
+        // Start Thread 2
+        t2.start();
+    }
+}

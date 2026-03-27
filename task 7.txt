@@ -1,0 +1,84 @@
+                                    Task 7
+
+
+A) HashSet Based Problem – COLORFUL Number
+
+
+import java.util.HashSet;
+import java.util.Scanner;
+
+public class ColorfulNumber {
+
+    public static int isColorful(int A) {
+        String num = String.valueOf(A);
+        HashSet<Integer> set = new HashSet<>();
+
+        for (int i = 0; i < num.length(); i++) {
+            int product = 1;
+            for (int j = i; j < num.length(); j++) {
+                product *= (num.charAt(j) - '0');
+
+                if (set.contains(product)) {
+                    return 0; // Not colorful
+                }
+                set.add(product);
+            }
+        }
+        return 1; // Colorful
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter number: ");
+        int A = sc.nextInt();
+
+        System.out.println(isColorful(A));
+
+        sc.close();
+    }
+}
+
+B) ArrayList Based Problem – Filtering and Sorting Items
+
+
+import java.util.*;
+
+public class ArrayListShort {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<Double> ratings = new ArrayList<>();
+
+        // Input names and ratings
+        for (int i = 0; i < n; i++) {
+            names.add(sc.next());
+            ratings.add(sc.nextDouble());
+        }
+
+        // Collect indices of ratings >= 8.0
+        ArrayList<Integer> index = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (ratings.get(i) >= 8.0) {
+                index.add(i);
+            }
+        }
+
+        // Sort indices based on rating (descending), then name (ascending)
+        index.sort((a, b) -> {
+            if (!ratings.get(a).equals(ratings.get(b))) {
+                return Double.compare(ratings.get(b), ratings.get(a));
+            }
+            return names.get(a).compareTo(names.get(b));
+        });
+
+        // Print results
+        for (int i : index) {
+            System.out.println(names.get(i) + " " + ratings.get(i));
+        }
+
+        sc.close();
+    }
+}
